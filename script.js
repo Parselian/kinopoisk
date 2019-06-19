@@ -31,13 +31,27 @@ function requestApi(method, url) {
 
         output.results.forEach(function (item) {
             let nameItem = item.name || item.title,
-                bornDate = item.first_air_date || item.release_date;
+                releaseDate = item.first_air_date || item.release_date,
+                poster = item.poster_path,
+                overview = item.overview;
+            
+            if(overview.length > 140) {
+                let her = overview.slice(0,141);
+                overview = her + '...';
+            }
 
-            inner += `<div class="col-12">
-                        ${nameItem}
-                        <span style="font-weight: bold"> (${bornDate})</span>
+            inner += `<div class="col-xs-12 col-sm-8 col-md-6 film">
+                        <img class="poster" src="https://image.tmdb.org/t/p/w500/${poster}">
+                        
+                        <div class="description">
+                            <div class="title">${nameItem}</div>
+
+                            <div class="release-date"> дата выхода: (${releaseDate})</div>
+
+                            <p class="overview">${overview}</p>
+                        </div>
                      </div>`;    
-            console.log(bornDate);
+            console.log(poster.value);
         });
 
         movie.innerHTML = inner;
